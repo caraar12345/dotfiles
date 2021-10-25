@@ -1,5 +1,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/sh
+chmod +x $HOME/op
+sudo mv $HOME/op /usr/local/bin/op
 sudo apt update
 sudo apt upgrade
 sudo apt install neovim
