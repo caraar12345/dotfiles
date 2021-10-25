@@ -1,0 +1,46 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+which -s brew
+if [[ $? != 0 ]] ; then
+    # Install Homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    brew update
+fi
+brew bundle --no-lock --file=/dev/stdin <<EOF
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+tap "homebrew/services"
+brew "afflib"
+brew "ant"
+brew "automake"
+brew "pkg-config"
+brew "chezmoi"
+brew "ciphey"
+brew "cmake"
+brew "cocoapods"
+brew "gmp"
+brew "coreutils"
+brew "curl"
+brew "gh"
+brew "git"
+brew "iterm2"
+brew "ncdu"
+brew "neofetch"
+brew "neovim"
+brew "watch"
+brew "wget"
+brew "zsh"
+cask "1password-cli"
+cask "font-fantasque-sans-mono-nerd-font"
+cask "font-ibm-plex-mono"
+cask "font-ibm-plex-sans"
+cask "font-ibm-plex-serif"
+EOF
+
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.iterm2"
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+{{ end -}}
+
