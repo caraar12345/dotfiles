@@ -1,5 +1,6 @@
 {{ if eq .chezmoi.os "linux" -}}
 #!/bin/sh
 sudo apt update
+sudo apt upgrade
 sudo apt install neovim
 {{ end -}}
