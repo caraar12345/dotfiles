@@ -7,7 +7,7 @@ DISABLE_AUTO_UPDATE="true"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-plugins=(git docker docker-compose iterm2 osx sudo vscode zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git docker docker-compose iterm2 macos sudo vscode zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -15,4 +15,26 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='nvim'
 export VISUAL='nvim'
 
+[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && . "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+[ -f $HOME/src/github.com/monzo/starter-pack/zshrc ] && source $HOME/src/github.com/monzo/starter-pack/zshrc
+# NVM settings
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+
+export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s github_api_token -w)
