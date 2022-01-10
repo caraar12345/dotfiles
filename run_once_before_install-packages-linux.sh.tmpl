@@ -8,6 +8,7 @@ chsh -s $(which zsh)
 {{ if eq .chezmoi.osRelease.idLike "fedora" -}}
 #!/bin/sh
 sudo yum update -y
-sudo yum install -y neovim zsh 
+sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install -y neovim python3-neovim zsh
 chsh -s $(which zsh)
 {{ end -}}
