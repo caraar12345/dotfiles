@@ -1,7 +1,13 @@
-{{ if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.osRelease.idLike "debian" -}}
 #!/bin/sh
 sudo apt update
 sudo apt upgrade -y
 sudo apt install -y neovim zsh 
+chsh -s $(which zsh)
+{{ end -}}
+{{ if eq .chezmoi.osRelease.idLike "fedora" -}}
+#!/bin/sh
+sudo yum update -y
+sudo yum install -y neovim zsh 
 chsh -s $(which zsh)
 {{ end -}}
