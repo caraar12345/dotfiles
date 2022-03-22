@@ -18,6 +18,16 @@
 
 {{- if (env "WORK_LAPTOP" | eq "true") }}
 
+[url "git@github.com-caraar12345:caraar12345/"]
+  insteadOf = "git@github.com:caraar12345/"
+  insteadOf = "https://github.com/caraar12345/"
+
 [commit]
   gpgSign = true
+
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
 {{- end}}
