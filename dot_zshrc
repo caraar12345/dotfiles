@@ -11,9 +11,10 @@ GOPATH=${HOME}
 
 if [ -f ~/.monzo/zshrc ]; then
     plugins=(git docker iterm2 macos sudo vscode zsh-syntax-highlighting zsh-autosuggestions)
+    WORK_LAPTOP=true
     source ~/.monzo/zshrc
 else
-    plugins=(git docker docker-compose dotenv iterm2 osx sudo vscode zsh-autosuggestions zsh-syntax-highlighting)
+    plugins=(git docker docker-compose dotenv iterm2 macos sudo vscode zsh-autosuggestions zsh-syntax-highlighting)
 fi
 
 source $ZSH/oh-my-zsh.sh
