@@ -1,5 +1,10 @@
 {{- if (eq .chezmoi.os "darwin") -}}
 #!/bin/bash
+{{- if (env "WORK_LAPTOP" | eq "true") }}
+gpg-connect-agent --quiet /bye
+SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+export SSH_AUTH_SOCK
+{{- end}}
 which -s brew
 if [[ $? != 0 ]] ; then
     # Install Homebrew
@@ -24,7 +29,6 @@ brew "cocoapods"
 brew "gmp"
 brew "coreutils"
 brew "curl"
-brew "google-cloud-sdk"
 brew "gh"
 brew "git"
 brew "ncdu"
@@ -40,13 +44,15 @@ cask "font-fantasque-sans-mono-nerd-font"
 cask "font-ibm-plex-mono"
 cask "font-ibm-plex-sans"
 cask "font-ibm-plex-serif"
+cask "google-cloud-sdk"
 cask "visual-studio-code"
 EOF
 
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.iterm2"
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-{{ end -}}
+if [ -d "~/.local/share/nvim/site/pack/packer/start/packer.nvim" ]
+then  git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi 
 
+{{ end -}}
