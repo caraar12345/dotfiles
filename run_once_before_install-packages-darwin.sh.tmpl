@@ -45,5 +45,8 @@ EOF
 
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.iterm2"
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 {{ end -}}
 
