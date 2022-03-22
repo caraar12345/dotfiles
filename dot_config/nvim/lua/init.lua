@@ -12,7 +12,7 @@ vim.g.neovide_cursor_vfx_mode = "railgun"
 vim.opt.mouse = "a"
 
 vim.opt.termguicolors = true
-vim.opt.clipboard = unnamed,unnamedplus
+vim.opt.clipboard = {"unnamed","unnamedplus"}
 
 vim.cmd [[
   highlight Comment cterm=italic gui=italic
