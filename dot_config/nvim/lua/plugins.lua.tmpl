@@ -13,7 +13,7 @@ require('packer').startup(function(use)
       },
       config = function() require'nvim-tree'.setup {} end
   }
-  {{- if env("WORK_LAPTOP") | eq "true" }}
+  {{- if env "WORK_LAPTOP" | eq "true" }}
   use { "~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo" }
-  {{ endif }}
+  {{- end }}
 end)
