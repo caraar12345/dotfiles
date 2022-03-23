@@ -49,3 +49,5 @@ sudo() {
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export PATH=${HOME}/bin:${HOME}/bin/nvim/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/lib/ruby/gems/3.0.0/bin:$PATH
+alias neovide=~/src/github.com/neovide/neovide/target/release/neovide
+alias cat='highlight -O ansi --force'
