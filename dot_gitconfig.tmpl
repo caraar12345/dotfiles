@@ -1,0 +1,33 @@
+[user]
+  name = Aaron Carson
+  {{- if (env "WORK_LAPTOP" | ne "true") }}
+  email = aaron@aaroncarson.co.uk
+  {{- else }}
+  email = aaroncarson@monzo.com
+  signingKey = C4A672757A3E440E4A753CBD8D50C6EED5600C4A
+  {{- end}}
+
+[init]
+  defaultBranch = main
+
+[url "git@github.com:"]
+  insteadOf = "https://github.com/"
+
+[push]
+  default = current
+
+{{- if (env "WORK_LAPTOP" | eq "true") }}
+
+[url "git@github.com-caraar12345:caraar12345/"]
+  insteadOf = "git@github.com:caraar12345/"
+  insteadOf = "https://github.com/caraar12345/"
+
+[commit]
+  gpgSign = true
+
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+{{- end}}
