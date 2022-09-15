@@ -1,0 +1,12 @@
+[user]
+  name = Aaron Carson
+  email = aaroncarson@monzo.com
+  signingKey = C4A672757A3E440E4A753CBD8D50C6EED5600C4A
+
+[url "git@github.com-caraar12345:caraar12345/"]
+  insteadOf = "git@github.com:caraar12345/"
+  insteadOf = "https://github.com/caraar12345/"
+
+[commit]
+  gpgSign = true
+

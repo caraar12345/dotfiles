@@ -1,8 +1,4 @@
 lua require('init')
-if !empty(glob("~/.monzo/zshrc"))
-  lua require('monzo/plugins')
-  lua require('monzo/lspconfig')
-endif
 
 lua require('plugins')
 
@@ -15,3 +11,7 @@ inoremap <D-v> <D-r>+
 cnoremap <D-v> <D-r>+
 " use <D-r> to insert original character without triggering things like auto-pairs
 inoremap <D-r> <D-v>
+augroup go_augroup
+  autocmd!
+  autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+augroup END

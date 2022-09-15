@@ -4,7 +4,7 @@ require('packer').startup(function(use)
   use { 'nvim-lua/completion-nvim' }
   use { 'nvim-lua/plenary.nvim' }
   use { 'nvim-telescope/telescope.nvim' }
-  use { 'neoclide/coc.nvim', branch = 'release' }
+  -- use { 'neoclide/coc.nvim', branch = 'release' }
   use { 'folke/tokyonight.nvim' }
   use {
       'kyazdani42/nvim-tree.lua',
@@ -13,6 +13,15 @@ require('packer').startup(function(use)
       },
       config = function() require'nvim-tree'.setup {} end
   }
+  use { 'github/copilot.vim' }
+  use { 
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
+  use { 'hrsh7th/nvim-cmp' }
+  use { 'jose-elias-alvarez/null-ls.nvim' }
+  use { 'norcalli/snippets.nvim' }
+  use { 'feline-nvim/feline.nvim' }
   {{- if env "WORK_LAPTOP" | eq "true" }}
   use { "~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo" }
   {{- end }}

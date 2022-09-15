@@ -22,4 +22,10 @@ vim.cmd[[colorscheme tokyonight]]
 
 vim.cmd [[
   highlight Comment cterm=italic gui=italic
+  autocmd BufWritePost /Users/aaroncarson/src/github.com/monzo/detection-rules/*.yml !sigmafmt -w <afile>
 ]]
+
+require 'monzo_config.lspconfig'
+require 'monzo_config.cmp'
+require 'monzo_config.vale'
+require('feline').setup()
