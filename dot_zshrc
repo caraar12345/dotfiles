@@ -1,3 +1,5 @@
+macchina
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -36,7 +38,7 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 
-export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
+#export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
 
 sudo() {
   unset -f sudo
@@ -54,8 +56,21 @@ then
   gpg-connect-agent --quiet /bye
   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
-export PATH="/usr/local/opt/go@1.18/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export GOBIN="$GOPATH/bin"
+export PATH="/usr/local/clamav/bin:$GOROOT/bin:$GOPATH/bin:$PATH"
+export MADONCTL_TOKEN=$(security find-generic-password -s madonctl -w)
+source <(madonctl completion zsh)
+
+if command -v op &> /dev/null
+then
+  source <(op completion zsh)
+  
+fi

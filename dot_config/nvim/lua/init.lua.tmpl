@@ -4,28 +4,18 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 
--- Neovide
-{{- if (env "WORK_LAPTOP" | eq "true") }}
-vim.opt.guifont = "FantasqueSansMono Nerd Font:h18"
-{{- else }}
-vim.opt.guifont = "FantasqueSansMono Nerd Font:h15"
-{{- end }}
-vim.g.neovide_transparency = 0.9
-vim.g.neovide_remember_window_size = true
-vim.g.neovide_cursor_vfx_mode = "railgun"
-vim.opt.mouse = "a"
-
 vim.opt.termguicolors = true
 vim.opt.clipboard = {"unnamed","unnamedplus"}
-
-vim.cmd[[colorscheme tokyonight]]
 
 vim.cmd [[
   highlight Comment cterm=italic gui=italic
   autocmd BufWritePost /Users/aaroncarson/src/github.com/monzo/detection-rules/*.yml !sigmafmt -w <afile>
 ]]
 
+{{- if (env "WORK_LAPTOP" | eq "true") }}
 require 'monzo_config.lspconfig'
 require 'monzo_config.cmp'
 require 'monzo_config.vale'
+{{- end }}
+
 require('feline').setup()
