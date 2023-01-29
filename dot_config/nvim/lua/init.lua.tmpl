@@ -9,13 +9,25 @@ vim.opt.clipboard = {"unnamed","unnamedplus"}
 
 vim.cmd [[
   highlight Comment cterm=italic gui=italic
-  autocmd BufWritePost /Users/aaroncarson/src/github.com/monzo/detection-rules/*.yml !sigmafmt -w <afile>
 ]]
 
 {{- if (env "WORK_LAPTOP" | eq "true") }}
 require 'monzo_config.lspconfig'
 require 'monzo_config.cmp'
 require 'monzo_config.vale'
+vim.cmd [[
+  autocmd BufWritePost /Users/aaroncarson/src/github.com/monzo/detection-rules/*.yml !sigmafmt -w <afile>
+]]
 {{- end }}
 
 require('feline').setup()
+
+-- Language servers
+require'lspconfig'.gopls.setup{}
+
+require'lspconfig'.terraformls.setup{}
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = vim.lsp.buf.format(),
+})
+

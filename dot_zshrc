@@ -66,11 +66,19 @@ export PATH="$GOENV_ROOT/bin:$PATH"
 eval "$(goenv init -)"
 export GOBIN="$GOPATH/bin"
 export PATH="/usr/local/clamav/bin:$GOROOT/bin:$GOPATH/bin:$PATH"
-export MADONCTL_TOKEN=$(security find-generic-password -s madonctl -w)
-source <(madonctl completion zsh)
+#export MADONCTL_TOKEN=$(security find-generic-password -s madonctl -w)
+#source <(madonctl completion zsh)
 
 if command -v op &> /dev/null
 then
   source <(op completion zsh)
   
 fi
+
+# Load Git completion
+zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
+fpath=(~/.zsh $fpath)
+
+autoload -Uz compinit && compinit
+
+source /Users/aaroncarson/.config/op/plugins.sh
