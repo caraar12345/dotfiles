@@ -1,7 +1,5 @@
-lua require('init')
-
-lua require('plugins')
-
+let mapleader="\\"
+colorscheme nord
 
 " system clipboard
 nmap <D-c> "+y
@@ -15,3 +13,13 @@ augroup go_augroup
   autocmd!
   autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
 augroup END
+
+map <Leader>e :lua vim.diagnostic.open_float(0, {scope="line"})<CR>
+map <Leader>c :BufferClose<CR>
+
+let g:python3_host_prog = $HOME . '/.local/venv/nvim/bin/python'
+
+" load lua files last to ensure they take precedence
+lua require('init')
+lua require('plugins')
+lua require('plugin_conf')
