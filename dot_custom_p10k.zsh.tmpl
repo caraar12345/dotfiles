@@ -1,0 +1,16 @@
+{{- if (env "WORK_LAPTOP" | eq "true") }}
+function prompt_privileges() {
+  local PRIVILEGES_STATE=$(privilegescli --status 2>&1 | awk -F ' ' '{print $4}')
+  if [[ $PRIVILEGES_STATE == "admin" ]]
+  then
+      p10k segment -r -b red -f white -i 'LOCK_ICON' -t 'admin'
+  elif [[ $PRIVILEGES_STATE == "standard" ]]
+  then
+      p10k segment -r -b green -f white -i 'OK_ICON' -t 'standard'
+  fi
+}
+{{- end}}
+
+function prompt_example() {
+  p10k segment -b 1 -f 3 -i '⭐' -t 'hello, %n'
+}

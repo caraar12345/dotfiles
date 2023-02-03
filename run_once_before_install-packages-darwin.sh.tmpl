@@ -1,3 +1,4 @@
+{{- if (env "DO_NOT_RUN_INSTALL_SCRIPT" | ne "true") }}
 {{- if (eq .chezmoi.os "darwin") -}}
 #!/bin/bash
 {{- if (env "WORK_LAPTOP" | eq "true") }}
@@ -279,4 +280,5 @@ if [ -d "~/.local/share/nvim/site/pack/packer/start/packer.nvim" ]
 then  git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 fi 
 
+{{ end -}}
 {{ end -}}

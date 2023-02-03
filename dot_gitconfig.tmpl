@@ -1,8 +1,10 @@
 [user]
   name = Aaron Carson
+  {{- if (env "WORK_LAPTOP" | ne "true") }}
   email = aaron@aaroncarson.co.uk
+  {{- else if (env "WORK_LAPTOP" | eq "true") }}
+  email = aaroncarson@monzo.com
 
-{{- if (env "WORK_LAPTOP" | eq "true") }}
 [includeIf "gitdir:~/src/github.com/monzo/**"]
   path = ~/.monzo.gitconfig
 {{- end}}
