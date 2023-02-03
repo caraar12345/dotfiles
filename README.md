@@ -1,4 +1,4 @@
 ## .dotfiles
 
-![Screenshot of my terminal running neofetch](screenshots/neofetch.png)
+![Screenshot of my terminal opening; macchina runs by default](screenshots/terminal.png)
 
