@@ -1,4 +1,5 @@
 macchina
+autoload -Uz compinit && compinit
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -33,11 +34,11 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
 
-export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export GEM_HOME="$($(brew --prefix)/opt/ruby/bin/ruby -e 'puts Gem.user_dir')"
 export GOENV_ROOT="$HOME/.goenv"
 export GOBIN="$GOPATH/bin"
 
-export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$GOROOT/bin:$GOPATH/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$GOROOT/bin:$GOPATH/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -56,6 +57,5 @@ fpath=(~/.zsh $fpath)
 
 source $(dirname $(gem which colorls))/tab_complete.sh
 
-autoload -Uz compinit && compinit
 export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
 setopt HIST_IGNORE_SPACE
