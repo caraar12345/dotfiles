@@ -17,6 +17,7 @@ require("nvim-tree").setup({
   },
 })
 
+
 -- Set up nvim-cmp.
 local cmp = require'cmp'
 
