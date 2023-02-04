@@ -1,0 +1,10 @@
+[edit]
+apply = true
+
+[git]
+autoAdd = true
+autoCommit = true
+
+[merge]
+command = "nvim"
+args = ["-d","{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]

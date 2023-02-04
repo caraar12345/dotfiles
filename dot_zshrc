@@ -58,4 +58,5 @@ fpath=(~/.zsh $fpath)
 source $(dirname $(gem which colorls))/tab_complete.sh
 
 export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
+export BAT_THEME="Nord"
 setopt HIST_IGNORE_SPACE
