@@ -44,7 +44,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval "$(goenv init -)"
+if command -v goenv &> /dev/null
+then
+  eval "$(goenv init -)"
+fi
+
 
 if command -v op &> /dev/null
 then
@@ -56,7 +60,6 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
 source $(dirname $(gem which colorls))/tab_complete.sh
-
+{{ if eq .chezmoi.os "darwin" }}
 export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
-export BAT_THEME="Nord"
 setopt HIST_IGNORE_SPACE

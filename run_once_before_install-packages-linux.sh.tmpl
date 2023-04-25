@@ -4,6 +4,9 @@
 sudo apt update
 sudo apt upgrade -y
 sudo apt install -y neovim zsh 
+if [ -d "~/.local/share/nvim/site/pack/packer/start/packer.nvim" ]
+then  git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi 
 chsh -s $(which zsh)
 {{ end -}}
 {{ if eq .chezmoi.osRelease.id "fedora" }}
@@ -11,5 +14,8 @@ sudo yum update -y
 sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo yum install -y neovim python3-neovim zsh
 chsh -s $(which zsh)
+if [ -d "~/.local/share/nvim/site/pack/packer/start/packer.nvim" ]
+then  git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+fi 
 {{ end -}}
 {{ end }} 
