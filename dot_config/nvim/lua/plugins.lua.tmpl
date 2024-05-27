@@ -26,7 +26,4 @@ require('packer').startup(function(use)
   end
   }
   use { 'andweeb/presence.nvim' }
-  {{- if env "WORK_LAPTOP" | eq "true" }}
-  use { '~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo' }
-  {{- end }}
 end)
