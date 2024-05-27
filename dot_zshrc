@@ -28,6 +28,7 @@ test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_int
 
 export GEM_HOME="$($(brew --prefix)/opt/ruby/bin/ruby -e 'puts Gem.user_dir')"
 export GOENV_ROOT="$HOME/.goenv"
+export GOPATH="$HOME"
 export GOBIN="$GOPATH/bin"
 
 export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$GOROOT/bin:$GOPATH/bin:$PATH
