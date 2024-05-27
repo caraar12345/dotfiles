@@ -1,3 +1,5 @@
+export PATH=/opt/homebrew/bin:$PATH
+
 macchina
 autoload -Uz compinit && compinit
 
@@ -10,7 +12,8 @@ export ZSH_THEME="powerlevel10k/powerlevel10k"
 export DISABLE_AUTO_UPDATE='true'
 
 plugins=(git docker docker-compose dotenv iterm2 macos sudo vscode zsh-autosuggestions zsh-syntax-highlighting)
-[[ ! -d /Applications/Secretive.app ]] || export SSH_AUTH_SOCK=${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+#[[ ! -d /Applications/Secretive.app ]] || export SSH_AUTH_SOCK=${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+export SSH_AUTH_SOCK="${HOME}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 
 [[ ! -f $ZSH/oh-my-zsh.sh ]]           || source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]]                 || source ~/.p10k.zsh
