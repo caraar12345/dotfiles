@@ -53,6 +53,4 @@ zstyle ':completion:*:*:git:*' script ~/.zsh/git-completion.bash
 fpath=(~/.zsh $fpath)
 
 source $(dirname $(gem which colorls))/tab_complete.sh
-{{ if eq .chezmoi.os "darwin" }}
-export HOMEBREW_GITHUB_API_TOKEN=$(security find-generic-password -s homebrew_github_api_token -w)
 setopt HIST_IGNORE_SPACE
