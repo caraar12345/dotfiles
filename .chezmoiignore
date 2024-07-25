@@ -7,3 +7,7 @@ screenshots/*
 {{ if (ne .chezmoi.os "darwin") }}
 Library
 {{ end }}
+
+{{- if (env "WORK_LAPTOP" | ne "true") }}
+.config/nvim/lua/monzo_config
+{{- end}}

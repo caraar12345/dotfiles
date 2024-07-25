@@ -1,0 +1,42 @@
+packages:
+  darwin:
+    brews:
+      - zsh
+      - git
+      - python@3.12
+      - neovim
+      - ncdu
+      - the_silver_searcher
+      - black
+      - gh
+      - yq
+      - jq
+      - glow
+      - go
+      - goenv
+      - httpie
+      - macchina
+      - coreutils
+      - curl
+      - wget
+      - ruby
+      - bat
+
+    casks:
+      - google-chrome
+      - 1password
+      - 1password-cli
+      - iterm2
+      - orbstack
+      - spotify
+      - rocket
+      - visual-studio-code
+      - font-fantasque-sans-mono-nerd-font
+      - font-caskaydia-mono-nerd-font
+      - font-iosevka-nerd-font
+      - font-iosevka
+      - font-ibm-plex-mono
+      - font-ibm-plex-sans
+      - font-ibm-plex-serif
+      - font-open-sans
+      - vlc

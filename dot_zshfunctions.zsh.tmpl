@@ -1,0 +1,57 @@
+mkcd() {
+  if [ ! -n "$1" ]; then
+    echo "Enter a directory name"
+  elif [ -d $1 ]; then
+    echo "\`$1' already exists"
+  else
+    mkdir $1 && cd $1
+  fi
+}
+
+sudo() {
+  unset -f sudo
+  if [[ "$(uname)" == 'Darwin' ]] && ! grep 'pam_tid.so' /etc/pam.d/sudo_local --silent; then
+    sed -e 's/^#auth/auth/' /etc/pam.d/sudo_local.template | sudo tee /etc/pam.d/sudo_local
+  fi
+  sudo "$@"
+}
+
+# autosuggestions + paste = slow..until now
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic }
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+
+glone() {
+  IFS='/' read -r _ _ host team repo <<< "$1";
+  to_dir="$HOME/src/$host/$team/$repo";
+  if ! [ -d "$to_dir" ]; then
+    mkdir -p "$to_dir";
+    git clone "$1" "$to_dir";
+  fi
+  cd "$to_dir";
+}
+
+
+{{- if (env "WORK_LAPTOP" | eq "true") }}
+brew() {
+  if test "$#" -gt 0 && [ "$1" = "upgrade" ]; then
+   while [ $(privilegescli --status 2>&1 | awk '{ print $4 }') = "standard" ]; do
+     command echo "🔒 Admin rights required... (hit ctrl+D once pwd entered)"
+     command echo "➡️  privilegescli --add"
+     command privilegescli --add
+     export PRIVILEGES_ADDED=true
+   done
+   shift
+   command brew upgrade "$@"
+   if [ $PRIVILEGES_ADDED = true ]; then
+     privilegescli --remove
+   fi 
+  else
+    command brew "$@"
+  fi
+}
+{{- end}}

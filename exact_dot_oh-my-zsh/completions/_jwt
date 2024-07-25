@@ -1,0 +1,191 @@
+#compdef jwt
+
+autoload -U is-at-least
+
+_jwt() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_jwt_commands" \
+"*::: :->jwt" \
+&& ret=0
+    case $state in
+    (jwt)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:jwt-command-$line[1]:"
+        case $line[1] in
+            (encode)
+_arguments "${_arguments_options[@]}" \
+'-A+[the algorithm to use for signing the JWT]:ALGORITHM:(HS256 HS384 HS512 RS256 RS384 RS512 PS256 PS384 PS512 ES256 ES384 EDDSA)' \
+'--alg=[the algorithm to use for signing the JWT]:ALGORITHM:(HS256 HS384 HS512 RS256 RS384 RS512 PS256 PS384 PS512 ES256 ES384 EDDSA)' \
+'-k+[the kid to place in the header]:KID: ' \
+'--kid=[the kid to place in the header]:KID: ' \
+'-t+[the type of token being encoded]:type:(jwt)' \
+'--typ=[the type of token being encoded]:type:(jwt)' \
+'*-P+[a key=value pair to add to the payload]:PAYLOAD: ' \
+'*--payload=[a key=value pair to add to the payload]:PAYLOAD: ' \
+'-e+[the time the token should expire, in seconds or a systemd.time string]' \
+'--exp=[the time the token should expire, in seconds or a systemd.time string]' \
+'-i+[the issuer of the token]:ISSUER: ' \
+'--iss=[the issuer of the token]:ISSUER: ' \
+'-s+[the subject of the token]:SUBJECT: ' \
+'--sub=[the subject of the token]:SUBJECT: ' \
+'-a+[the audience of the token]:AUDIENCE: ' \
+'--aud=[the audience of the token]:AUDIENCE: ' \
+'--jti=[the jwt id of the token]:JWT_ID: ' \
+'-n+[the time the JWT should become valid, in seconds or a systemd.time string]:NOT_BEFORE: ' \
+'--nbf=[the time the JWT should become valid, in seconds or a systemd.time string]:NOT_BEFORE: ' \
+'-S+[the secret to sign the JWT with. Prefix with @ to read from a file or b64\: to use base-64 encoded bytes]:SECRET: ' \
+'--secret=[the secret to sign the JWT with. Prefix with @ to read from a file or b64\: to use base-64 encoded bytes]:SECRET: ' \
+'-o+[The path of the file to write the result to (suppresses default standard output)]:OUTPUT_PATH:_files' \
+'--out=[The path of the file to write the result to (suppresses default standard output)]:OUTPUT_PATH:_files' \
+'--no-iat[prevent an iat claim from being automatically added]' \
+'--no-typ[prevent typ from being added to the header]' \
+'--keep-payload-order[prevent re-ordering of payload keys]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+'::json -- the json payload to encode:' \
+&& ret=0
+;;
+(decode)
+_arguments "${_arguments_options[@]}" \
+'-A+[The algorithm used to sign the JWT]:ALGORITHM:(HS256 HS384 HS512 RS256 RS384 RS512 PS256 PS384 PS512 ES256 ES384 EDDSA)' \
+'--alg=[The algorithm used to sign the JWT]:ALGORITHM:(HS256 HS384 HS512 RS256 RS384 RS512 PS256 PS384 PS512 ES256 ES384 EDDSA)' \
+'--date=[Display unix timestamps as ISO 8601 dates \[default\: UTC\] \[possible values\: UTC, Local, Offset (e.g. -02\:00)\]]' \
+'-S+[The secret to validate the JWT with. Prefix with @ to read from a file or b64\: to use base-64 encoded bytes]:SECRET: ' \
+'--secret=[The secret to validate the JWT with. Prefix with @ to read from a file or b64\: to use base-64 encoded bytes]:SECRET: ' \
+'-o+[The path of the file to write the result to (suppresses default standard output, implies JSON format)]:OUTPUT_PATH:_files' \
+'--out=[The path of the file to write the result to (suppresses default standard output, implies JSON format)]:OUTPUT_PATH:_files' \
+'-j[Render the decoded JWT as JSON]' \
+'--json[Render the decoded JWT as JSON]' \
+'--ignore-exp[Ignore token expiration date (\`exp\` claim) during validation]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':jwt -- The JWT to decode. Provide '\''-'\'' to read from STDIN:' \
+&& ret=0
+;;
+(completion)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':shell -- the shell to generate completions for:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_jwt__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:jwt-help-command-$line[1]:"
+        case $line[1] in
+            (encode)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(decode)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(completion)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_jwt_commands] )) ||
+_jwt_commands() {
+    local commands; commands=(
+'encode:Encode new JWTs' \
+'decode:Decode a JWT' \
+'completion:Print completion' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'jwt commands' commands "$@"
+}
+(( $+functions[_jwt__completion_commands] )) ||
+_jwt__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt completion commands' commands "$@"
+}
+(( $+functions[_jwt__help__completion_commands] )) ||
+_jwt__help__completion_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt help completion commands' commands "$@"
+}
+(( $+functions[_jwt__decode_commands] )) ||
+_jwt__decode_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt decode commands' commands "$@"
+}
+(( $+functions[_jwt__help__decode_commands] )) ||
+_jwt__help__decode_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt help decode commands' commands "$@"
+}
+(( $+functions[_jwt__encode_commands] )) ||
+_jwt__encode_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt encode commands' commands "$@"
+}
+(( $+functions[_jwt__help__encode_commands] )) ||
+_jwt__help__encode_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt help encode commands' commands "$@"
+}
+(( $+functions[_jwt__help_commands] )) ||
+_jwt__help_commands() {
+    local commands; commands=(
+'encode:Encode new JWTs' \
+'decode:Decode a JWT' \
+'completion:Print completion' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'jwt help commands' commands "$@"
+}
+(( $+functions[_jwt__help__help_commands] )) ||
+_jwt__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'jwt help help commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_jwt" ]; then
+    _jwt "$@"
+else
+    compdef _jwt jwt
+fi
