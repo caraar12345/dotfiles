@@ -1,5 +1,3 @@
-colorscheme nord
-
 " system clipboard
 nmap <D-c> "+y
 vmap <D-c> "+y
@@ -16,7 +14,5 @@ augroup END
 let g:python3_host_prog = $HOME . '/.local/venv/nvim/bin/python'
 
 " load lua files last to ensure they take precedence
-lua require('init')
-lua require('plugins')
-lua require('plugin_conf')
 lua require('keymaps')
+lua require('init')

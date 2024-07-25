@@ -1,3 +1,5 @@
+require("config.lazy")
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -10,13 +12,4 @@ vim.opt.shiftwidth = 2
 vim.opt.termguicolors = true
 vim.opt.clipboard = {"unnamed","unnamedplus"}
 vim.api.nvim_set_hl(0, 'Comment', { italic=true })
-
-{{- if (env "WORK_LAPTOP" | eq "true") }}
-require 'monzo_config.lspconfig'
-require 'monzo_config.cmp'
-require 'monzo_config.vale'
-vim.cmd [[
-  autocmd BufWritePost /Users/aaroncarson/src/github.com/monzo/detection-rules/*.yml !sigmafmt -w <afile>
-]]
-{{- end }}
 
