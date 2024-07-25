@@ -1,3 +1,10 @@
+if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+else if [ -f /opt/homebrew/bin/brew ]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
+fi
+
 autoload -U +X compinit && compinit
 macchina
 
@@ -32,9 +39,6 @@ if [ ! -f $HOME/.iterm2_shell_integration.zsh ]; then
 fi
 source $HOME/.iterm2_shell_integration.zsh
 
-if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
-  export PATH=$(/home/linuxbrew/.linuxbrew/bin/brew --prefix)/bin:$PATH
-fi
 
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -48,7 +52,7 @@ export GOBIN="$GOPATH/bin"
 
 if (( $+commands[brew] )) then
   export GEM_HOME="$($(brew --prefix)/opt/ruby/bin/ruby -e 'puts Gem.user_dir')"
-  export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/opt/ruby/bin:$(brew --prefix)/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$GOPATH/bin:$PATH
+  export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/opt/ruby/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$PATH
 else
   export PATH=$HOME/bin:$HOME/.local/bin:$GOENV_ROOT/bin:$GOPATH/bin:$PATH
 fi
