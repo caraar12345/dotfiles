@@ -1,4 +1,7 @@
+vim.g.python3_host_prog = vim.env.HOME .. '/.local/venv/nvim/bin/python'
+
 require("config.lazy")
+require("plugin_conf")
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
