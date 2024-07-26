@@ -1,34 +1,102 @@
 return {
   {{- if env "WORK_LAPTOP" | eq "true" }}
-  { '~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo' },
+  { dir = '~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo' },
   {{- end }}
-{
+  {
     "shaunsingh/nord.nvim",
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-        -- load the colorscheme here
-        vim.cmd([[colorscheme nord]])
-    end
-}, {"wbthomason/packer.nvim"}, {'hrsh7th/cmp-nvim-lsp'}, {'neovim/nvim-lspconfig'}, {'nvim-lua/completion-nvim'},
-        {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope.nvim'}, {'nvim-tree/nvim-web-devicons'}, {
-    'nvim-tree/nvim-tree.lua',
-    requires = 'nvim-web-devicons'
-}, {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate'
-}, {'hrsh7th/nvim-cmp'}, {'jose-elias-alvarez/null-ls.nvim'}, {'dcampos/nvim-snippy'}, {'honza/vim-snippets'},
-        {'feline-nvim/feline.nvim'}, {
-    'petertriho/cmp-git',
-    dependencies = 'nvim-lua/plenary.nvim'
-}, {'romgrk/barbar.nvim'}, {
-    'averms/black-nvim',
-    build = ':UpdateRemotePlugins'
-}, {
-    "folke/which-key.nvim",
-    config = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-        require("which-key").setup {}
-    end
-}, {'andweeb/presence.nvim'}, {'lewis6991/gitsigns.nvim'}}
+      -- load the colorscheme here
+      vim.cmd([[colorscheme nord]])
+    end,
+  },
+  { 'hrsh7th/cmp-nvim-lsp' },
+  { 'neovim/nvim-lspconfig' },
+  { 'nvim-lua/completion-nvim' },
+  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-telescope/telescope.nvim' },
+  { 'nvim-tree/nvim-web-devicons' },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    cmd = 'Neotree',
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    init = function()
+      vim.api.nvim_create_autocmd('BufNewFile', {
+        group    = vim.api.nvim_create_augroup('RemoteFile', {clear = true}),
+        callback = function()
+          local f = vim.fn.expand('%:p')
+          for _, v in ipairs{'sftp', 'scp', 'ssh', 'dav', 'fetch', 'ftp', 'http', 'rcp', 'rsync'} do
+            local p = v .. '://'
+            if string.sub(f, 1, #p) == p then
+              vim.cmd[[
+                unlet g:loaded_netrw
+                unlet g:loaded_netrwPlugin
+                runtime! plugin/netrwPlugin.vim
+                silent Explore %
+              ]]
+              vim.api.nvim_clear_autocmds{group = 'RemoteFile'}
+              break
+            end
+          end
+        end
+      })
+
+      vim.api.nvim_create_autocmd('BufEnter', {
+        -- make a group to be able to delete it later
+        group = vim.api.nvim_create_augroup('NeoTreeInit', {clear = true}),
+        callback = function()
+          local f = vim.fn.expand('%:p')
+          if vim.fn.isdirectory(f) ~= 0 then
+            vim.cmd('Neotree current dir=' .. f)
+            -- neo-tree is loaded now, delete the init autocmd
+            vim.api.nvim_clear_autocmds{group = 'NeoTreeInit'}
+          end
+        end
+      })
+      -- keymaps
+    end,
+    opts = {
+      filesystem = {
+        hijack_netrw_behavior = 'open_current'
+      }
+    }
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    opts = {
+      highlight = { enable = true },
+    },
+  },
+  { 'hrsh7th/nvim-cmp' },
+  { 'jose-elias-alvarez/null-ls.nvim' },
+  { 'dcampos/nvim-snippy' },
+  { 'honza/vim-snippets' },
+  { 'feline-nvim/feline.nvim' },
+  { 'petertriho/cmp-git', dependencies = {'nvim-lua/plenary.nvim'} },
+  { 'romgrk/barbar.nvim'},
+  { 'averms/black-nvim',
+    build = ':UpdateRemotePlugins',
+    lazy = false,
+  },
+  {
+     "folke/which-key.nvim",
+     config = function()
+     vim.o.timeout = true
+     vim.o.timeoutlen = 300
+     require("which-key").setup {}
+  end
+  },
+  { 'andweeb/presence.nvim' },
+  { 'lewis6991/gitsigns.nvim' },
+  { "williamboman/mason.nvim", lazy=false, priority=1000 },
+  { "williamboman/mason-lspconfig.nvim", lazy=false, priority=1000}
+}
