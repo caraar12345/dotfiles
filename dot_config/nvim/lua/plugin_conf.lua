@@ -239,3 +239,4 @@ require("presence").setup({
 
 require('gitsigns').setup()
 --require('black-nvim').setup()
+require('mini.icons').setup()
