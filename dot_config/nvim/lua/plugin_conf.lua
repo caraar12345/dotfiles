@@ -1,18 +1,24 @@
--- Set up nvim-tree
-require("nvim-tree").setup({
-    sort = {
-        sorter = "case_sensitive"
-    },
-    view = {
-        width = 30
-    },
-    renderer = {
-        group_empty = true
-    },
-    filters = {
-        dotfiles = true
+require('mason').setup()
+require("mason-lspconfig").setup()
+
+require("neo-tree").setup({
+  window = {
+    mappings = {
+      ["<Space>"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
     }
+  }
 })
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 -- Set up nvim-cmp.
 local cmp = require 'cmp'
@@ -84,16 +90,26 @@ require('lspconfig')['gopls'].setup {
 require('lspconfig')['terraformls'].setup {
     capabilities = capabilities
 }
+
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
     pattern = {"*.tf", "*.tfvars"},
     callback = vim.lsp.buf.format
 })
 
-require('lspconfig')['pyright'].setup {}
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-    pattern = {"*.py"},
-    command = 'call Black()'
-})
+require('lspconfig')['pyright'].setup{}
+vim.api.nvim_create_augroup("AutoFormat", {})
+
+vim.api.nvim_create_autocmd(
+    "BufWritePost",
+    {
+        pattern = "*.py",
+        group = "AutoFormat",
+        callback = function()
+            vim.cmd("silent !black --quiet %")            
+            vim.cmd("edit")
+        end,
+    }
+)
 
 -- cmp_git
 require("cmp_git").setup()
@@ -217,3 +233,4 @@ require("presence").setup({
 })
 
 require('gitsigns').setup()
+--require('black-nvim').setup()
