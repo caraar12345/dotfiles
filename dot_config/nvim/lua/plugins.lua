@@ -1,5 +1,7 @@
 return {
+  {{- if env "WORK_LAPTOP" | eq "true" }}
   { dir = '~/src/github.com/monzo/wearedev/tools/editors/nvim/nvim-monzo' },
+  {{- end }}
   {
     "shaunsingh/nord.nvim",
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
@@ -36,5 +38,4 @@ return {
   },
   { 'andweeb/presence.nvim' },
   { 'lewis6991/gitsigns.nvim' }
-
 }
