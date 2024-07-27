@@ -71,6 +71,6 @@ export NVM_DIR="$HOME/.nvm"
 
 {{ if eq .chezmoi.os "linux" }}
 {{   if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
-source $HOME/agent-bridge.sh
+source $HOME/.agent-bridge.sh
 {{   end }}
 {{ end }}
