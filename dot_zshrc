@@ -1,5 +1,6 @@
 if [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
   export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+  fpath=(/home/linuxbrew/.linuxbrew/share/zsh/site-functions $fpath)
 else if [ -f /opt/homebrew/bin/brew ]; then
   export PATH=/opt/homebrew/bin:$PATH
 fi
