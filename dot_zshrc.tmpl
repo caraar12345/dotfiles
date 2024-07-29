@@ -53,10 +53,10 @@ export GOBIN="$GOPATH/bin"
 
 if (( $+commands[brew] )) then
   export GEM_HOME="$($(brew --prefix)/opt/ruby/bin/ruby -e 'puts Gem.user_dir')"
-  export PATH=$HOME/bin:$HOME/.local/bin:$(brew --prefix)/opt/ruby/bin:$GEM_HOME/bin:$GOENV_ROOT/bin:$PATH
-else
-  export PATH=$HOME/bin:$HOME/.local/bin:$GOENV_ROOT/bin:$GOPATH/bin:$PATH
+  export PATH=$(brew --prefix)/opt/ruby/bin:$GEM_HOME/bin:$PATH
 fi
+
+export PATH=$HOME/.spicetify:$HOME/bin:$HOME/.local/bin:$GOENV_ROOT/bin:$GOPATH/bin:$PATH
 
 
 # Load Git completion
