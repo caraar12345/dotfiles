@@ -24,6 +24,7 @@ packages:
 
     casks:
       - google-chrome
+      - discord
       - 1password
       - 1password-cli
       - iterm2
